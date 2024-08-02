@@ -11,7 +11,7 @@ const PrivateRoute = () => {
     if(authUser) {
         return <Outlet />   
     } else {
-        return <Navigate to="/forbidden"  state={{from:location.pathname}} />
+        return <Navigate to="/signin"  state={{from:location.pathname}} />
     }
    
 }
