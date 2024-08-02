@@ -10,7 +10,7 @@ import UserContext from '../context/UserContext';
 
 const UpdateCourse = () => {
 
-  const {authUser, authCred, actions } = useContext(UserContext);
+  const {authCred, actions } = useContext(UserContext);
   const [courses, setCourses] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -106,9 +106,10 @@ const UpdateCourse = () => {
                 type="text"
                 ref={title}
                 defaultValue={courses.title} />
-
-              <p>By {authUser.firstName} {authUser.lastName}</p>
-
+              <p>By  
+                { courses.student ? courses.student.firstName : null } 
+                {courses.student ? courses.student.lastName : null }
+              </p>
               <label htmlFor="courseDescription">Course Description</label>
               <textarea
                 id="description"
