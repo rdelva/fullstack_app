@@ -12,25 +12,54 @@ import UserContext from '../context/UserContext';
 const UpdateCourse = () => {
 
   const { authCred, actions } = useContext(UserContext);
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState([]); 
+  const [errors, setErrors] = useState([]);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
 
-  //Pulls in the requested course so it can be displayed within the form fields.
   useEffect(() => {
-    fetch(`http://localhost:5000/api/courses/${id}`)
-      .then(response => response.json()) //takes the response object and return it in JSONs format
-      .then(responseData => setCourses(responseData)) //takes the json data and send it to setCourses
-      .catch(error => console.log("Error fetching and parsing data", error));
-  }, [id]);
+    const handleGetCourse = async () => {
+      // const credentials = {
+      //   emailAddress: authCred.emailAddress,
+      //   password: authCred.password
+      // };
+
+      try {
+        const response = await api(`/courses/${id}`, "GET", null, null);
+        if (response.status === 200) {
+          //console.log(`${courses.title} has now been deleted`);
+          const data = await response.json();       
+          setCourses(data);
+         // await actions.signIn(credentials);
+        } else if (response.status === 400) {
+          const data = await response.json();
+          setErrors(data.errors);
+        } else if (response.status === 404) {
+          navigate("/notfound");
+        }
+        else {
+          throw new Error();
+        }
+      } catch (error) {
+        console.log(errors);
+        navigate("/error");
+
+      }    
+    } // end of handleGet Course
+
+    handleGetCourse();
+
+  }, [id, actions,  errors, navigate]);
+
 
   //State
   const title = useRef(null);
   const description = useRef(null);
   const estimatedTime = useRef(null);
   const materialsNeeded = useRef(null);
-  const [errors, setErrors] = useState([]);
+  
 
 
   //Update Course Handler
@@ -71,6 +100,8 @@ const UpdateCourse = () => {
       } else if (response.status === 400) {
         const data = await response.json();
         setErrors(data.errors);
+      } else if (response.status === 404) {
+          navigate("/notfound");        
       } else {
         throw new Error();
       }
@@ -83,13 +114,12 @@ const UpdateCourse = () => {
 
   }//end of handleUpdateCourse
 
+
+  //Selecting cancel will return to the course description unchanged
   const handleCancel = (event) => {
     event.preventDefault();
-    navigate("/");
-
-  }
-
-
+    navigate(`/api/courses/${id}`);
+  } // end of handleCancel
 
   return (
     <main>
