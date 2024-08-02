@@ -47,9 +47,6 @@ const CoursesDetail = () => {
 
     handleGetCourse();
 
-  
-
-
   }, [id, actions,  errors, navigate]);
 
 
