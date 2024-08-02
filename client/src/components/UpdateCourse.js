@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
 import { api } from '../utils/apiHelper'
 
 
@@ -10,12 +11,12 @@ import UserContext from '../context/UserContext';
 
 const UpdateCourse = () => {
 
-  const {authCred, actions } = useContext(UserContext);
+  const { authCred, actions } = useContext(UserContext);
   const [courses, setCourses] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  
+
   //Pulls in the requested course so it can be displayed within the form fields.
   useEffect(() => {
     fetch(`http://localhost:5000/api/courses/${id}`)
@@ -42,14 +43,21 @@ const UpdateCourse = () => {
       description: description.current.value,
       estimatedTime: estimatedTime.current.value,
       materialsNeeded: materialsNeeded.current.value,
-      
-    }
- 
-   
 
-   
+    }
+
+
+
+    const parseMaterialsNeeded = () =>{
+
+    }// end of parseMaterialsNeeded
+
+    console.log(course.materialsNeeded);
+
+    parseMaterialsNeeded();
+
     // let items = course.materialsNeeded.split("\n");
-     
+
     // let result = items.map( (item) => {
     //    return `* ${item} \n`;
     // });
@@ -89,7 +97,7 @@ const UpdateCourse = () => {
     navigate("/");
 
   }
- 
+
 
 
   return (
@@ -106,16 +114,16 @@ const UpdateCourse = () => {
                 type="text"
                 ref={title}
                 defaultValue={courses.title} />
-              <p>By  
-                { courses.student ? courses.student.firstName : null } 
-                {courses.student ? courses.student.lastName : null }
+              <p>By
+                {courses.student ? courses.student.firstName : null}
+                {courses.student ? courses.student.lastName : null}
               </p>
               <label htmlFor="courseDescription">Course Description</label>
               <textarea
                 id="description"
                 name="description"
                 ref={description}
-                defaultValue={courses.description} >                                            
+                defaultValue={courses.description} >
               </textarea>
             </div>
             <div>
@@ -132,7 +140,7 @@ const UpdateCourse = () => {
                 id="materialsNeeded"
                 name="materialsNeeded"
                 ref={materialsNeeded}
-                defaultValue={courses.materialsNeeded} >                
+                defaultValue={courses.materialsNeeded} >
               </textarea>
             </div>
           </div>
