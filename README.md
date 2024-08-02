@@ -5,7 +5,7 @@ This project will allow the user to interact with a exisiting school database wh
 Users can do the following:
 
 <ul>
-    <li>Create your own user account and log in<li>
+    <li>Create your own user account and log in</li>
     <li>Retrive a List of courses</li>
     <liol>View detail on a specific course</li>
     <li>Create, Update and Delete courses in the database</li>    
