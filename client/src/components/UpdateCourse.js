@@ -1,10 +1,7 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
 import { api } from '../utils/apiHelper'
-
-
 import ErrorsDisplay from './ErrorsDisplay';
 import UserContext from '../context/UserContext';
 
@@ -12,11 +9,17 @@ import UserContext from '../context/UserContext';
 const UpdateCourse = () => {
 
   const { authCred, actions } = useContext(UserContext);
-  const [courses, setCourses] = useState([]); 
+  const [courses, setCourses] = useState([]);
   const [errors, setErrors] = useState([]);
-
   const { id } = useParams();
   const navigate = useNavigate();
+
+
+  //State
+  const title = useRef(null);
+  const description = useRef(null);
+  const estimatedTime = useRef(null);
+  const materialsNeeded = useRef(null);
 
 
   useEffect(() => {
@@ -30,9 +33,9 @@ const UpdateCourse = () => {
         const response = await api(`/courses/${id}`, "GET", null, null);
         if (response.status === 200) {
           //console.log(`${courses.title} has now been deleted`);
-          const data = await response.json();       
+          const data = await response.json();
           setCourses(data);
-         // await actions.signIn(credentials);
+          // await actions.signIn(credentials);
         } else if (response.status === 400) {
           const data = await response.json();
           setErrors(data.errors);
@@ -46,20 +49,12 @@ const UpdateCourse = () => {
         console.log(errors);
         navigate("/error");
 
-      }    
+      }
     } // end of handleGet Course
 
     handleGetCourse();
 
-  }, [id, actions,  errors, navigate]);
-
-
-  //State
-  const title = useRef(null);
-  const description = useRef(null);
-  const estimatedTime = useRef(null);
-  const materialsNeeded = useRef(null);
-  
+  }, [id, actions, errors, navigate]);
 
 
   //Update Course Handler
@@ -75,16 +70,16 @@ const UpdateCourse = () => {
 
     }
 
-  //Parse Materials Text to put astrisk before each item 
+    //Parse Materials Text to put astrisk before each item 
 
-   /* let materialsText = course.materialsNeeded.replaceAll("\n", "\n *  ");      
-    console.log(materialsText);
-    let items = course.materialsNeeded.split("\n");
-    let result = items.map( (item) => {
-       return `* ${item} \n`;
-    });
-        console.log(items);    
-    console.log(result.toString( ));  */
+    /* let materialsText = course.materialsNeeded.replaceAll("\n", "\n *  ");      
+     console.log(materialsText);
+     let items = course.materialsNeeded.split("\n");
+     let result = items.map( (item) => {
+        return `* ${item} \n`;
+     });
+         console.log(items);    
+     console.log(result.toString( ));  */
 
     const credentials = {
       emailAddress: authCred.emailAddress,
@@ -101,7 +96,7 @@ const UpdateCourse = () => {
         const data = await response.json();
         setErrors(data.errors);
       } else if (response.status === 404) {
-          navigate("/notfound");        
+        navigate("/notfound");
       } else {
         throw new Error();
       }
@@ -156,7 +151,7 @@ const UpdateCourse = () => {
                 ref={estimatedTime}
                 defaultValue={courses.estimatedTime} />
 
-              <label htmlFor="materialsNeeded"> Materials Needed</label>              
+              <label htmlFor="materialsNeeded"> Materials Needed</label>
               <textarea
                 id="materialsNeeded"
                 name="materialsNeeded"
