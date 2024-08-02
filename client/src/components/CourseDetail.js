@@ -118,7 +118,7 @@ const CoursesDetail = () => {
               <p>By  { courses.student ? courses.student.firstName : null } {courses.student ? courses.student.lastName : null }
 
                  </p>
-              <p>{courses.description}</p>
+              <p><Markdown>{courses.description}</Markdown></p>
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
