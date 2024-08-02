@@ -46,25 +46,16 @@ const UpdateCourse = () => {
 
     }
 
+  //Parse Materials Text to put astrisk before each item 
 
-
-    const parseMaterialsNeeded = () =>{
-
-    }// end of parseMaterialsNeeded
-
-    console.log(course.materialsNeeded);
-
-    parseMaterialsNeeded();
-
-    // let items = course.materialsNeeded.split("\n");
-
-    // let result = items.map( (item) => {
-    //    return `* ${item} \n`;
-    // });
-
-    //     console.log(items);    
-
-    // console.log(result.toString( ));
+   /* let materialsText = course.materialsNeeded.replaceAll("\n", "\n *  ");      
+    console.log(materialsText);
+    let items = course.materialsNeeded.split("\n");
+    let result = items.map( (item) => {
+       return `* ${item} \n`;
+    });
+        console.log(items);    
+    console.log(result.toString( ));  */
 
     const credentials = {
       emailAddress: authCred.emailAddress,
@@ -114,7 +105,7 @@ const UpdateCourse = () => {
                 type="text"
                 ref={title}
                 defaultValue={courses.title} />
-              <p>By
+              <p>By:{` `}  {/* Added the empty literal to create space btween the By and First Name  */}
                 {courses.student ? courses.student.firstName : null}
                 {courses.student ? courses.student.lastName : null}
               </p>
@@ -135,7 +126,7 @@ const UpdateCourse = () => {
                 ref={estimatedTime}
                 defaultValue={courses.estimatedTime} />
 
-              <label htmlFor="materialsNeeded">Materials Needed</label>
+              <label htmlFor="materialsNeeded"> Materials Needed</label>              
               <textarea
                 id="materialsNeeded"
                 name="materialsNeeded"
