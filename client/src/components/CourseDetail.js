@@ -113,12 +113,9 @@ const CoursesDetail = () => {
           <div className="main--flex">
             <div>
               <h3 className="course--detail--title">Course</h3>
-              <h4 className="course--name"> {courses.title}</h4>
-              {/* not sure why this isn't working.  */}
-              <p>By  { courses.student ? courses.student.firstName : null } {courses.student ? courses.student.lastName : null }
-
-                 </p>
-              <p><Markdown>{courses.description}</Markdown></p>
+              <h4 className="course--name"> {courses.title}</h4>              
+              <p>By  { courses.student ? courses.student.firstName : null } {courses.student ? courses.student.lastName : null } </p>
+              <><Markdown>{courses.description}</Markdown></> 
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
