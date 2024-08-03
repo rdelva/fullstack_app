@@ -4,6 +4,13 @@ import { api } from '../utils/apiHelper'
 import Markdown from 'react-markdown';
 import UserContext from '../context/UserContext';
 
+
+
+
+/**
+ * When a user clicks on a course it goes to this page were it lists all the details of the
+ * of the course.
+ */
 const CoursesDetail = () => {
   const { authUser, authCred, actions } = useContext(UserContext);
   const [courses, setCourses] = useState([]);
@@ -13,7 +20,7 @@ const CoursesDetail = () => {
   const { id } = useParams();
 
 
-  // fetch Course Detail data
+  // Retrives the course details
 
   useEffect(() => {
     const handleGetCourse = async () => {
