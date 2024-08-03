@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 
+/**
+ * This component lists all of the courses listed within the database. And allows the user
+ * user to click on the course and view  the Course Details.
+ * 
+ */
 const Courses = () => {
-
+   // data will be sent into setCourses(), and courses variable will be used as reference
   const [courses, setCourses] = useState([]);
 
 
@@ -15,7 +20,7 @@ const Courses = () => {
       .catch(error => console.log("Error fetching and parsing data", error));
   }, []);
 
-
+  // Creates and builds the course list to be displayed
   const courseName = courses.map((course, index) =>
     <Link className="course--module course--link" to={`/api/courses/${course.id}`} key={index}>
       <h2 className="course--label">Course</h2>
