@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 /**
  * This component lists all of the courses listed within the database. And allows the user
  * user to click on the course and view  the Course Details.
- * 
  */
 const Courses = () => {
    // data will be sent into setCourses(), and courses variable will be used as reference
