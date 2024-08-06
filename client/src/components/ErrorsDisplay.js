@@ -1,3 +1,4 @@
+//Displays erros that occur within the application
 const ErrorsDisplay = ({ errors }) => {
     let errorsDisplay = null;
 
