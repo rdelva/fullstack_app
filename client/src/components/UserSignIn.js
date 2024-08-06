@@ -4,7 +4,9 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ErrorsDisplay from './ErrorsDisplay';
 import UserContext from '../context/UserContext';
 
-
+/*
+* This component allows the user to sign in. 
+*/
 const UserSignIn = () => {
 
   const { actions } = useContext(UserContext);
@@ -25,7 +27,7 @@ const UserSignIn = () => {
     if (location.state) {
       from = location.state.from;
     }
-
+     console.log(location.state); 
 
     const credentials = {
       emailAddress: emailAddress.current.value,
