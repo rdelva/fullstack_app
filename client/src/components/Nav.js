@@ -5,6 +5,11 @@ import UserContext from "../context/UserContext";
 const Nav = () => {
     const { authUser } = useContext(UserContext);
     return (
+        /**
+        * If User does not log-in they will only see SignUp and Sign in
+        * If User logs in they will see their username and signout
+        */
+        
         <nav>
             {
                 authUser === null ?
