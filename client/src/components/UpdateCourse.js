@@ -5,10 +5,14 @@ import { api } from '../utils/apiHelper'
 import ErrorsDisplay from './ErrorsDisplay';
 import UserContext from '../context/UserContext';
 
-
+/**
+ * This componenet allows account holders to update the their own courses only. 
+ * If a user who does not have an account they will be required to sign in. Or create an
+ * account.
+ */
 const UpdateCourse = () => {
 
-  const { authCred, actions } = useContext(UserContext);
+  const { authUser, authCred, actions } = useContext(UserContext);
   const [courses, setCourses] = useState([]);
   const [errors, setErrors] = useState([]);
   const { id } = useParams();
@@ -22,40 +26,45 @@ const UpdateCourse = () => {
   const materialsNeeded = useRef(null);
 
 
+
   useEffect(() => {
+
+
+     /**
+ * When  Account holder clicks on Update Course handleGetCourse() will pull course based on id. 
+ * The data will be used as a "default values" in the fields. If the creator of the course wants
+ *  to change the information.
+ */ 
+
     const handleGetCourse = async () => {
-      // const credentials = {
-      //   emailAddress: authCred.emailAddress,
-      //   password: authCred.password
-      // };
+         try {
+        const response = await api(`/courses/${id}`, "GET", null, null);       
+          if (response.status === 200) {         
+            const data = await response.json();
+            setCourses(data);
+            // await actions.signIn(credentials);
+          } else if (response.status === 400) {
+            const data = await response.json();
+            setErrors(data.errors);
+          } else if (response.status === 403) {
+            navigate("/forbidden");        
+          } else if (response.status === 404) {
+            navigate("/notfound");
+          }
+          else {
+            throw new Error();
+          }
+        } catch (error) {
+          console.log(errors);
+          navigate("/error");
 
-      try {
-        const response = await api(`/courses/${id}`, "GET", null, null);
-        if (response.status === 200) {
-          //console.log(`${courses.title} has now been deleted`);
-          const data = await response.json();
-          setCourses(data);
-          // await actions.signIn(credentials);
-        } else if (response.status === 400) {
-          const data = await response.json();
-          setErrors(data.errors);
-        } else if (response.status === 404) {
-          navigate("/notfound");
         }
-        else {
-          throw new Error();
-        }
-      } catch (error) {
-        console.log(errors);
-        navigate("/error");
-
-      }
-    } // end of handleGet Course
+      } // end of handleGet Course
 
     handleGetCourse();
-
-  }, [id, actions, errors, navigate]);
-
+    
+    }, [id, actions, errors, navigate, courses, authUser]);
+   
 
   //Update Course Handler
 
@@ -70,22 +79,16 @@ const UpdateCourse = () => {
 
     }
 
-    //Parse Materials Text to put astrisk before each item 
-
-    /* let materialsText = course.materialsNeeded.replaceAll("\n", "\n *  ");      
-     console.log(materialsText);
-     let items = course.materialsNeeded.split("\n");
-     let result = items.map( (item) => {
-        return `* ${item} \n`;
-     });
-         console.log(items);    
-     console.log(result.toString( ));  */
 
     const credentials = {
       emailAddress: authCred.emailAddress,
       password: authCred.password
     };
 
+    /* This allows the account holder to update their course. Only if the course id and their user id is the same.
+    *  However, an account holder will be able to see an update course of another user but will not be able to update it.
+    * If they make an attempt they will get a 403-Forbidden page.
+    */
     try {
       const response = await api(`/courses/${id}`, "PUT", course, credentials);
       if (response.status === 201 || response.status === 204) {
@@ -95,6 +98,8 @@ const UpdateCourse = () => {
       } else if (response.status === 400) {
         const data = await response.json();
         setErrors(data.errors);
+      } else if (response.status === 403) {
+        navigate("/forbidden");
       } else if (response.status === 404) {
         navigate("/notfound");
       } else {
@@ -131,7 +136,7 @@ const UpdateCourse = () => {
                 ref={title}
                 defaultValue={courses.title} />
               <p>By:{` `}  {/* Added the empty literal to create space btween the By and First Name  */}
-                {courses.student ? courses.student.firstName : null}
+                {courses.student ? courses.student.firstName : null} {` `} 
                 {courses.student ? courses.student.lastName : null}
               </p>
               <label htmlFor="courseDescription">Course Description</label>
