@@ -4,22 +4,29 @@ import { api } from '../utils/apiHelper'
 
 const UserContext = createContext(null);
 
-
-/*
-*/
-
+/**
+ * Allows the user  to set up props to be used through out the entire application if
+ * they use UserContext
+ */
 export const UserProvider = (props) => {
+    /**
+     * authenticated User, and authcreds are cookies which are used to hold the credentials and user log in info.
+     */
     const cookie = Cookies.get("authenticatedUser");
     const cookieCred = Cookies.get("authCreds");
 
-    // console.log(cookie);
-    // console.log(cookieCred);
-    
+
+    /**
+     * Checks to see if there is cookie
+     */
     const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null ); //saves the user info
     const [authCred, setAuthCred] = useState(cookieCred ? JSON.parse(cookieCred) : null );  //saves the email adress and password
     // console.log(authCred);
 
-
+    /**
+     * When user signs in it goes to the util/api.js sends in the username and password information to log in.
+     * and returns with a response. If the response is OK. It sets up the cookie and allows the user to log in
+     */
     const signIn = async (credentials) => {
 
         const response = await api("/users", "GET", null, credentials);
@@ -39,7 +46,7 @@ export const UserProvider = (props) => {
 
     }
 
-    //Remove Cookies from the website 
+    //Remove Cookies from the website and allows the user to sinout
     const signOut = () => {
         setAuthUser(null);
         setAuthCred(null);
@@ -47,7 +54,10 @@ export const UserProvider = (props) => {
         Cookies.remove("authCreds", "");
     }
 
-
+    /**
+     * sets up the variables and methods to be used throughout the application if they are
+     * going to use a UserContext
+     */
     return (
         <UserContext.Provider value={{
             authUser,
