@@ -7,6 +7,7 @@ import { UserProvider } from './context/UserContext';
 
 import './styles/reset.css';
 import './styles/global.css';
+import './styles/styles.css';
 
 
 import App from './App';
