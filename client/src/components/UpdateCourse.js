@@ -25,46 +25,48 @@ const UpdateCourse = () => {
   const estimatedTime = useRef(null);
   const materialsNeeded = useRef(null);
 
-
-
   useEffect(() => {
 
 
-     /**
- * When  Account holder clicks on Update Course handleGetCourse() will pull course based on id. 
- * The data will be used as a "default values" in the fields. If the creator of the course wants
- *  to change the information.
- */ 
+    /**
+* When  Account holder clicks on Update Course handleGetCourse() will pull course based on id. 
+* The data will be used as a "default values" in the fields. If the creator of the course wants
+*  to change the information.
+*/
 
     const handleGetCourse = async () => {
-         try {
-        const response = await api(`/courses/${id}`, "GET", null, null);       
-          if (response.status === 200) {         
-            const data = await response.json();
-            setCourses(data);
-            // await actions.signIn(credentials);
-          } else if (response.status === 400) {
-            const data = await response.json();
-            setErrors(data.errors);
-          } else if (response.status === 403) {
-            navigate("/forbidden");        
-          } else if (response.status === 404) {
-            navigate("/notfound");
-          }
-          else {
-            throw new Error();
-          }
-        } catch (error) {
-          console.log(errors);
-          navigate("/error");
+      try {
+        const response = await api(`/courses/${id}`, "GET", null, authCred);
+        console.log(authUser.id);
+        if (response.status === 200) {
 
+          const data = await response.json();
+          setCourses(data); //sends the data into setCourses and courses variable uses the info to display on the page
+          console.log(data);  // I noticed if I console.log this info it looks like its constantly fetching.
+
+          //Why can't I use course.student.id instead of data.student.id?
+          /*** If the id of the account holder is not the creator of the course. Block them  */
+          if (authUser.id !== data.student.id) {
+            navigate("/forbidden");
+          }
+        } else if (response.status === 400) {
+          const data = await response.json();
+          setErrors(data.errors);        
+        } else if (response.status === 404) {
+          navigate("/notfound");
+        } else {
+          throw new Error();
         }
-      } // end of handleGet Course
+      } catch (error) {
+        console.log(errors);
+        navigate("/error");
+      }
+    } // end of handleGet Course
 
     handleGetCourse();
-    
-    }, [id, actions, errors, navigate, courses, authUser]);
-   
+
+  }, [id, actions, errors, navigate, courses, authUser, authCred]);
+
 
   //Update Course Handler
 
@@ -91,6 +93,7 @@ const UpdateCourse = () => {
     */
     try {
       const response = await api(`/courses/${id}`, "PUT", course, credentials);
+      console.log(response);
       if (response.status === 201 || response.status === 204) {
         console.log(`${course.title} has now been updated`);
         await actions.signIn(credentials);
@@ -136,7 +139,7 @@ const UpdateCourse = () => {
                 ref={title}
                 defaultValue={courses.title} />
               <p>By:{` `}  {/* Added the empty literal to create space btween the By and First Name  */}
-                {courses.student ? courses.student.firstName : null} {` `} 
+                {courses.student ? courses.student.firstName : null} {` `}
                 {courses.student ? courses.student.lastName : null}
               </p>
               <label htmlFor="courseDescription">Course Description</label>
@@ -157,6 +160,7 @@ const UpdateCourse = () => {
                 defaultValue={courses.estimatedTime} />
 
               <label htmlFor="materialsNeeded"> Materials Needed</label>
+              <div className="label-note">Note: add a * before each material item to create a bullet point</div>
               <textarea
                 id="materialsNeeded"
                 name="materialsNeeded"
