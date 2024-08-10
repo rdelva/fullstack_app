@@ -68,8 +68,8 @@ const CoursesDetail = () => {
       const response = await api(`/courses/${id}`, "DELETE", null, credentials);
       if (response.status === 201 || response.status === 204) {
         console.log(`${courses.title} has now been deleted`);
-        await actions.signIn(credentials);
-        navigate("/");
+        await actions.signIn(credentials);      
+        navigate("/");        
       } else if (response.status === 400) {
         const data = await response.json();
         setErrors(data.errors);
