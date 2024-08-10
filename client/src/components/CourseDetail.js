@@ -20,7 +20,7 @@ const CoursesDetail = () => {
   const { id } = useParams();
 
 
-  // Retrives the course details
+  // Retrives the course details based 
 
   useEffect(() => {
     const handleGetCourse = async () => {
