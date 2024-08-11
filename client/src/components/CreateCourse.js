@@ -106,6 +106,7 @@ const CreateCourse = () => {
                                 placeholder="" />
 
                             <label htmlFor="materialsNeeded">Materials Needed</label>
+                            <div className="label-note">Note: add a * before each material item to create a bullet point</div>
                             <textarea
                                 id="materialsNeeded"
                                 name="materialsNeeded"
