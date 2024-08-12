@@ -14,7 +14,8 @@ export const api = (
     ) => {
 
     
-    const url = "http://localhost:5000/api" + path;
+    const url = "https://fullstackapp-production-246d.up.railway.app/api" + path;
+    //old url for local const url = "http://localhost:5000/api" + path;
 
     const options = {
         method,
