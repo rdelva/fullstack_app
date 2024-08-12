@@ -37,12 +37,12 @@ const UpdateCourse = () => {
     const handleGetCourse = async () => {
       try {
         const response = await api(`/courses/${id}`, "GET", null, authCred);
-        //console.log(authUser.id);
+       
         if (response.status === 200) {
 
           const data = await response.json();
           setCourses(data); //sends the data into setCourses and courses variable uses the info to display on the page
-          //console.log(data);  // I noticed if I console.log this info it looks like its constantly fetching.
+         
 
           //Why can't I use course.student.id instead of data.student.id?
           /*** If the id of the account holder is not the creator of the course. Block them  */
