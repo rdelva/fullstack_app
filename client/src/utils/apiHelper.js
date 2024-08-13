@@ -14,8 +14,7 @@ export const api = (
     ) => {
 
     
-    const url = "https://timely-basbousa-10fd74.netlify.app/api" + path;
-    //old url for local const url = "http://localhost:5000/api" + path;
+    const url = "http://localhost:5000/api" + path;
    
 
     const options = {
