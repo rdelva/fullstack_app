@@ -14,7 +14,7 @@ export const api = (
     ) => {
 
     
-    const url = "https://fullstackapp-production-36a6.up.railway.app/api" + path;
+    const url = "https://fullstackapp-production-36a6.up.railway.app:80/api" + path;
    //old url  http://localhost:5000/api
 
     const options = {
