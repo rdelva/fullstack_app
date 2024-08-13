@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom';
 
 import { UserProvider } from './context/UserContext';
@@ -13,8 +13,7 @@ import './styles/styles.css';
 import App from './App';
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>      
         <UserProvider>
@@ -23,5 +22,3 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-
-
