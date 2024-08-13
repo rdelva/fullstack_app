@@ -64,4 +64,4 @@ typings/
 .next
 
 # SQLite database file
-*.db
+#*.db  // made it hidden - to upload db into github so it can work in netlify or railway 
