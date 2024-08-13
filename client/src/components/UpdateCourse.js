@@ -65,8 +65,8 @@ const UpdateCourse = () => {
 
     handleGetCourse();
 
-  }, [id, actions, errors, navigate, courses, authUser, authCred]);
-
+  }, [id]);
+    //, actions, errors, navigate, courses, authUser, authCred
 
   //Update Course Handler
 
