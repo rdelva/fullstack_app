@@ -13,7 +13,7 @@ const Courses = () => {
 
   //retrives the courses
   useEffect(() => {
-    fetch("http://localhost:5000/api/courses")
+    fetch("https://fullstackapp-production-36a6.up.railway.app/api/courses")
       .then(response => response.json()) //takes the response object and return it in JSONs format
       .then(responseData => setCourses(responseData)) //takes the json data and send it to setCourses
       .catch(error => console.log("Error fetching and parsing data", error));
