@@ -54,8 +54,8 @@ const CoursesDetail = () => {
 
     handleGetCourse();
 
-  }, [id ]);
-  //actions,  errors, navigate
+  }, []);
+  //id, actions,  errors, navigate
 
 
   // This handle will allow the owner of the course to delete their own course.
